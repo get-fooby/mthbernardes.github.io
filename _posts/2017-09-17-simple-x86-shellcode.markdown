@@ -2,7 +2,6 @@
 layout: post
 title:  "Creating a simple x86 shellcode"
 date:   2017-09-17 01:51:00
-comments: true
 disqus: true
 categories: Reversing
 ---
