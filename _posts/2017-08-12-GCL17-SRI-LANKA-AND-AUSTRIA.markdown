@@ -7,8 +7,7 @@ disqus: true
 tags: [GCL17]
 categories: Reversing
 ---
-#### Write Up SRI LANKA
-
+#### SRI LANKA
 The first thing to do is to run the "file" command, which will indicate that the file is an elf32. After that the binary was analyzed on r2 and I ended up realizing that I forgot to do the most simple and obvious thing as I am certified SGSE ( Strings grep Specialist Engineer), so I just executed the following command:
 {% highlight Bash %}
 strings -e s c9c18a2c3f65bb8d1f6133765889774a1224cbe993edcc1641275be12b29b10a | less
@@ -49,7 +48,7 @@ print ''.join(out)
 
 **FLAG:** th3 xxx t0k3n y0u s33k is: f0ll0w th3 r4bb1t
 
-#### Write Up AUSTRIA
+#### AUSTRIA
 Continuing with this file after the CTF, I just read the rest of the file and found that if I created I file with the coordinates, it will print the flag to me, so debugging the pyi_darchive, I created the file uKBcWeOjxleffzzZmpWXLUrSubOHWzaeVO.wgz, and put the coordinates inside it, because the script compares the content of the file with the values on coords var, so the file looks like that
 
 {% highlight Bash %}

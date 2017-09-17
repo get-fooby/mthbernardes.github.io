@@ -5,15 +5,27 @@
     <description>Hacking and other stuffs</description>
     <link>http://localhost:4000//</link>
     <atom:link href="http://localhost:4000//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 17 Sep 2017 05:53:30 -0300</pubDate>
-    <lastBuildDate>Sun, 17 Sep 2017 05:53:30 -0300</lastBuildDate>
+    <pubDate>Sun, 17 Sep 2017 07:09:31 -0300</pubDate>
+    <lastBuildDate>Sun, 17 Sep 2017 07:09:31 -0300</lastBuildDate>
     <generator>Jekyll v3.5.2</generator>
     
       <item>
+        <title>First step to create a wifi wordlist</title>
+        <description>&lt;p&gt;You can find on the internet various wordlists focused to crack wifi passwords, but it’s not the best wordlists to use in Brazil, so what about get some real brazillian passwords? There is an app called MandicMagic, it’s a social network, where the users save password of wifi network that they use or used sometime, well here is our honeypot, we just need to intercept the requests and try to discover how the app works.
+In my first attempt I failed, because all the requests made by the app are pinned, but thankfull to (&lt;img src=&quot;https://github.com/ac-pm/Inspeckage&quot; alt=&quot;Inspeckage&quot; /&gt;)&lt;/p&gt;
+</description>
+        <pubDate>Sun, 17 Sep 2017 03:01:00 -0300</pubDate>
+        <link>http://localhost:4000//mobile/2017/09/17/first-step-to-create-a-wifi-wordlist.html</link>
+        <guid isPermaLink="true">http://localhost:4000//mobile/2017/09/17/first-step-to-create-a-wifi-wordlist.html</guid>
+        
+        
+        <category>Mobile</category>
+        
+      </item>
+    
+      <item>
         <title>Creating a simple x86 shellcode</title>
-        <description>&lt;p&gt;&lt;b&gt;&lt;font color=&quot;red&quot;&gt;I'm using a x64 linux to do this&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;
-
-&lt;p&gt;It’s a simple x86 shellcode to call /bin/sh, but the first thing is understand how the sys_execve works, to do so you can access this &lt;a href=&quot;https://syscalls.kernelgrok.com/&quot; target=&quot;_blank&quot;&gt;site&lt;/a&gt; that gives to you a list with all the x86 syscalls, and the values you need to put in each register, just search for sys_execve.&lt;/p&gt;
+        <description>&lt;p&gt;It’s a simple x86 shellcode to call /bin/sh, but the first thing is understand how the sys_execve works, to do so you can access this &lt;a href=&quot;https://syscalls.kernelgrok.com/&quot; target=&quot;_blank&quot;&gt;site&lt;/a&gt; that gives to you a list with all the x86 syscalls, and the values you need to put in each register, just search for sys_execve.&lt;/p&gt;
 
 &lt;p&gt;The initial code bellow have all the comments to make it easy to understand how to use the sys_execve,&lt;/p&gt;
 
@@ -37,24 +49,21 @@ root@demoniware:~/shellcode# ./shell
 
 &lt;p&gt;But this code is not nullbyte free and it’s a problem when we are working with shellcodes, so with some work I got this code,&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;section .text:
-	global _start
-	_start:
-		push ebp		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;prologue
-		mov ebp,esp		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;prologue
-		sub esp,10		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;reserve &lt;span class=&quot;m&quot;&gt;10&lt;/span&gt; bytes on stack
-		push 0x68732f6e		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;send hs/n to stack
-		push 0x69622f2f		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;send ib// to stack
-		xor eax,eax		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;zero to eax
-		add eax,0x0b		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;add 0x0b on eax to call sys_execve
-		mov ebx,esp		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;mov //bin/sh&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;hs/nib//&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; to ebx
-		xor edx,edx		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;zero to edx first arg
-		xor ecx,edx		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;zero ecx second arg
-		int 0x80		&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;kernel interrupt&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;xor eax,eax &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;zero to eax
+push eax &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;put &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; in stack, end of string
+push 0x68732f6e &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; part of /bin/sh
+push 0x69622f2f &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; part of /bin/sh
+mov ebx,esp&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; mov /bin/sh to ebx
+push eax&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; put NULL on argv
+push ebx&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; put filename on stack
+mov ecx, esp&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; put filename to ecx
+xor edx,edx&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;envp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; NULL
+mov al,0x0b&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 0x0b to call sys_execve
+int 0x80&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; kernel interrupt&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;To confirm if my code is free of nullbytes, I used this site &lt;a href=&quot;https://defuse.ca/online-x86-assembler.htm#disassembly&quot; target=&quot;_blank&quot;&gt;defuse.ca&lt;/a&gt;, that translate asm instructions to opcodes or just use objdump, and now I have a shellcode free of nullbytes with 23 bytes because the shellcode does not need the prologue&lt;/p&gt;
+&lt;p&gt;To confirm if my code is free of nullbytes, I used this site &lt;a href=&quot;https://defuse.ca/online-x86-assembler.htm#disassembly&quot; target=&quot;_blank&quot;&gt;defuse.ca&lt;/a&gt;, that translate asm instructions to opcodes or just use objdump, and now I have a shellcode free of nullbytes with 25 bytes because the shellcode does not need the prologue&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;6e&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;2f&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;73&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;2f&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;2f&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;62&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;69&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;c0&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;83&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;c0&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;0b&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;89&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;e3&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;d2&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;d1&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;cd&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;80&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;C0&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;6E&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;2F&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;73&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;2F&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;2F&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;62&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;69&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;89&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;E3&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;53&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;89&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;E1&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;D2&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;B0&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;0B&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;CD&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;80&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
         <pubDate>Sat, 16 Sep 2017 22:51:00 -0300</pubDate>
@@ -68,8 +77,7 @@ root@demoniware:~/shellcode# ./shell
     
       <item>
         <title>Write Up GCL17 - SRI LANKA and AUSTRIA</title>
-        <description>&lt;h4 id=&quot;write-up-sri-lanka&quot;&gt;Write Up SRI LANKA&lt;/h4&gt;
-
+        <description>&lt;h4 id=&quot;sri-lanka&quot;&gt;SRI LANKA&lt;/h4&gt;
 &lt;p&gt;The first thing to do is to run the “file” command, which will indicate that the file is an elf32. After that the binary was analyzed on r2 and I ended up realizing that I forgot to do the most simple and obvious thing as I am certified SGSE ( Strings grep Specialist Engineer), so I just executed the following command:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;strings -e s c9c18a2c3f65bb8d1f6133765889774a1224cbe993edcc1641275be12b29b10a &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; less&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -103,7 +111,7 @@ pyi_darchive&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;&lt;strong&gt;FLAG:&lt;/strong&gt; th3 xxx t0k3n y0u s33k is: f0ll0w th3 r4bb1t&lt;/p&gt;
 
-&lt;h4 id=&quot;write-up-austria&quot;&gt;Write Up AUSTRIA&lt;/h4&gt;
+&lt;h4 id=&quot;austria&quot;&gt;AUSTRIA&lt;/h4&gt;
 &lt;p&gt;Continuing with this file after the CTF, I just read the rest of the file and found that if I created I file with the coordinates, it will print the flag to me, so debugging the pyi_darchive, I created the file uKBcWeOjxleffzzZmpWXLUrSubOHWzaeVO.wgz, and put the coordinates inside it, because the script compares the content of the file with the values on coords var, so the file looks like that&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;➜ cat uKBcWeOjxleffzzZmpWXLUrSubOHWzaeVO.wgz
