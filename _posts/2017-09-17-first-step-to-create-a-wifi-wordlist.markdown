@@ -5,12 +5,12 @@ date:   2017-09-17 06:01:00
 disqus: true
 categories: Mobile
 ---
-You can find on the internet various wordlists focused to crack wifi passwords, but it's not the best wordlists to use in Brazil, so what about get some real brazillian passwords? There is an app called <a href="http://wifimagic.com/" target="_blank">MandicMagic</a>, it's a social network, where the users save password of wifi network that they use or used sometime, well here is our honeypot, we just need to intercept the requests and try to discover how the app works.
-In my first attempt I failed, because all the requests made by the app are pinned, but thankfull to  <a href="https://github.com/ac-pm/Inspeckage" target="_blank">Inspeckage</a> was really easy to bypass it, the Inspeckage hooks the pinning function, so I  just follow the tutorial of how to use <a href="https://acpm.mobi/genymotion-xposed-inspeckage/" target="_blank">Genymotion + Inspeckage + Xposed</a> and get all the app requests.
+You can find on the internet various wordlists focused on cracking wifi passwords, but it's not the best wordlists to use in Brazil, so what about get some real brazilian passwords? There is an app called <a href="http://wifimagic.com/" target="_blank">MandicMagic</a>, it's a social network, where the users save password of wifi network that they use or used sometime, well here is our honeypot, we just need to intercept the requests and try to discover how the app works.
+In my first attempt I failed, because all the requests made by the app are pinned, but thanks to  <a href="https://github.com/ac-pm/Inspeckage" target="_blank">Inspeckage</a> was really easy to bypass it, the Inspeckage hooks the pinning function, I've just followed the tutorial of how to use <a href="https://acpm.mobi/genymotion-xposed-inspeckage/" target="_blank">Genymotion + Inspeckage + Xposed</a> and intercept all the app requests.
 
 Unfortunately the app does not work how I expect, because it does not use geographic coordinates, there to parameters x and y, and I can't figure out what they are, but I played with this numbers and get to different places, because the response shows the geographic coordinates of the wifi hotspot.
 
-Here is the result I get so far, the funciton searchWifi is where you have the parameters x and y to play with,
+Here is the result I got so far, the function searchWifi is where you have the parameters x and y to play with,
 {% highlight Python %}
 import urllib
 import requests
