@@ -2,8 +2,8 @@
 layout: post
 title:  "Creating a simple x86 shellcode"
 date:   2017-09-17 01:51:00
-disqus: true
 comments: true
+disqus: true
 categories: Reversing
 ---
 <b><font color="red">I'm using a x64 linux to do this</font></b>
