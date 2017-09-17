@@ -5,14 +5,14 @@
     <description>Hacking and other stuffs</description>
     <link>http://localhost:4000//</link>
     <atom:link href="http://localhost:4000//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 17 Sep 2017 07:43:10 -0300</pubDate>
-    <lastBuildDate>Sun, 17 Sep 2017 07:43:10 -0300</lastBuildDate>
+    <pubDate>Sun, 17 Sep 2017 19:16:00 -0300</pubDate>
+    <lastBuildDate>Sun, 17 Sep 2017 19:16:00 -0300</lastBuildDate>
     <generator>Jekyll v3.5.2</generator>
     
       <item>
         <title>First step to create a wifi wordlist</title>
         <description>&lt;p&gt;You can find on the internet various wordlists focused to crack wifi passwords, but it’s not the best wordlists to use in Brazil, so what about get some real brazillian passwords? There is an app called &lt;a href=&quot;http://wifimagic.com/&quot; target=&quot;_blank&quot;&gt;MandicMagic&lt;/a&gt;, it’s a social network, where the users save password of wifi network that they use or used sometime, well here is our honeypot, we just need to intercept the requests and try to discover how the app works.
-In my first attempt I failed, because all the requests made by the app are pinned, but thankfull to  &lt;a href=&quot;https://github.com/ac-pm/Inspeckage&quot; target=&quot;_blank&quot;&gt;Inspeckage&lt;/a&gt; it was really easy to bypass, just follow the tutorial of how to use &lt;a href=&quot;https://acpm.mobi/genymotion-xposed-inspeckage/&quot; target=&quot;_blank&quot;&gt;Genymotion + Inspeckage + Xposed&lt;/a&gt; and get all the app requests.&lt;/p&gt;
+In my first attempt I failed, because all the requests made by the app are pinned, but thankfull to  &lt;a href=&quot;https://github.com/ac-pm/Inspeckage&quot; target=&quot;_blank&quot;&gt;Inspeckage&lt;/a&gt; was really easy to bypass it, the Inspeckage hooks the pinning function, so I  just follow the tutorial of how to use &lt;a href=&quot;https://acpm.mobi/genymotion-xposed-inspeckage/&quot; target=&quot;_blank&quot;&gt;Genymotion + Inspeckage + Xposed&lt;/a&gt; and get all the app requests.&lt;/p&gt;
 
 &lt;p&gt;Unfortunately the app does not work how I expect, because it does not use geographic coordinates, there to parameters x and y, and I can’t figure out what they are, but I played with this numbers and get to different places, because the response shows the geographic coordinates of the wifi hotspot.&lt;/p&gt;
 
@@ -50,7 +50,7 @@ In my first attempt I failed, because all the requests made by the app are pinne
 
 &lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;login&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;email@email.com&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;yourpasswordhere&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;searchWifi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5533&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;11096&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+    &lt;span class=&quot;n&quot;&gt;searchWifi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5533&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;11096&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
         <pubDate>Sun, 17 Sep 2017 03:01:00 -0300</pubDate>
