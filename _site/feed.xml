@@ -5,9 +5,36 @@
     <description>Hacking and other stuffs</description>
     <link>http://localhost:4000//</link>
     <atom:link href="http://localhost:4000//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 17 Sep 2017 19:47:37 -0300</pubDate>
-    <lastBuildDate>Sun, 17 Sep 2017 19:47:37 -0300</lastBuildDate>
+    <pubDate>Wed, 20 Sep 2017 11:40:03 -0300</pubDate>
+    <lastBuildDate>Wed, 20 Sep 2017 11:40:03 -0300</lastBuildDate>
     <generator>Jekyll v3.5.2</generator>
+    
+      <item>
+        <title>Extract apk from a non root Android</title>
+        <description>&lt;p&gt;When your device is not rooted, and you want to analyse some app, you can’t just pull the application apk from it, so to do that, I use this trick.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE Your android need to have curl binary&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;adb shell find / -name curl&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;If the previous command return the curl path, access your smartphone using,&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;adb shell&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;then execute the following command just changing the package name,&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;package&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;package_name_goes_here&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;pm path &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;pm list packages &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; grep &lt;span class=&quot;nv&quot;&gt;$package&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cut -d &lt;span class=&quot;s1&quot;&gt;&amp;#39;:&amp;#39;&lt;/span&gt; -f2&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cut -d &lt;span class=&quot;s1&quot;&gt;&amp;#39;:&amp;#39;&lt;/span&gt; -f2&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;basename &lt;span class=&quot;nv&quot;&gt;$path&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;curl --upload-file &lt;span class=&quot;nv&quot;&gt;$path&lt;/span&gt; https://transfer.sh/&lt;span class=&quot;nv&quot;&gt;$filename&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;in the final you’ll receive an transfer.sh link, where your apk file is saved.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 17 Sep 2017 08:30:00 -0300</pubDate>
+        <link>http://localhost:4000//mobile/2017/09/17/extract-apk-no-root-android.html</link>
+        <guid isPermaLink="true">http://localhost:4000//mobile/2017/09/17/extract-apk-no-root-android.html</guid>
+        
+        
+        <category>Mobile</category>
+        
+      </item>
     
       <item>
         <title>First step to create a wifi wordlist</title>
