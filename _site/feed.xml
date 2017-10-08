@@ -5,9 +5,43 @@
     <description>Hacking and other stuffs</description>
     <link>http://localhost:4000//</link>
     <atom:link href="http://localhost:4000//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 20 Sep 2017 11:40:03 -0300</pubDate>
-    <lastBuildDate>Wed, 20 Sep 2017 11:40:03 -0300</lastBuildDate>
+    <pubDate>Sat, 07 Oct 2017 23:19:20 -0300</pubDate>
+    <lastBuildDate>Sat, 07 Oct 2017 23:19:20 -0300</lastBuildDate>
     <generator>Jekyll v3.5.2</generator>
+    
+      <item>
+        <title>BWCON 2017[pt-BR]</title>
+        <description>&lt;h4 id=&quot;bwcon-2017---phishing-a-sh3ll&quot;&gt;BWCON 2017 - Phishing a Sh3ll&lt;/h4&gt;
+&lt;p&gt;Esse ano pela primeira vez fui para Recife, e palestrei na BWCON evento organizado pelo mestre @Toronto com patrocínio da Tempest e da El Pescador, um evento sinistro, galera com alto nível técnico.
+Minha talk foi sobre Bypass de AV com VBA + Powershell, uma parada simples, mas que pode salvar ai em alguns projetos onde a única porta de entrada para a rede do cliente vai ser o phishing.
+Vou deixar aqui então o link do ppt(Gdrive) e os videos da PoC.&lt;/p&gt;
+
+&lt;h5 id=&quot;slides&quot;&gt;Slides&lt;/h5&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.google.com/presentation/d/1EPjqhAW1mFn_4bajhlzh76wwjMzjpRjDllUUyb1-DPA/edit?usp=sharing&quot;&gt;Phishing a Sh3ll&lt;/a&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;videos-poc&quot;&gt;Videos PoC&lt;/h5&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/N4aec7kvMB8&quot;&gt;Avast Execução Macro&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/JWAkj7enkCI&quot;&gt;Avast Execução Schedtask&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/brJ9Bke0YFY&quot;&gt;AVG Execução Macro&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/nGP7RS9WJ4I&quot;&gt;AVG Execução Schedtask&lt;/a&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;greatz&quot;&gt;Greatz&lt;/h5&gt;
+&lt;p&gt;Queria aproveitar e agradecer ao mestre @Toronto pela oportunidade, e a Conviso empresa que trabalho que proporcionou minha ida e estadia em Recife.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 07 Oct 2017 00:00:00 -0300</pubDate>
+        <link>http://localhost:4000//conference/2017/10/07/BWCON-2017.html</link>
+        <guid isPermaLink="true">http://localhost:4000//conference/2017/10/07/BWCON-2017.html</guid>
+        
+        <category>BWCON17</category>
+        
+        
+        <category>Conference</category>
+        
+      </item>
     
       <item>
         <title>Extract apk from a non root Android</title>
