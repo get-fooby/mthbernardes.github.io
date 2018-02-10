@@ -8,6 +8,9 @@ tags: [SSH]
 categories: Persistence
 ---
 #### Ok I became root what can I do now?.
+
+BEFORE ALL, it's an old trick, but all the tutorials that I found didn't work for me, so I just wrote my own :).
+
 Sometimes when you get root access to a server or a workstation, you don't really have the root password, sometimes you just exploit the server, and got id 0, what can I do in this case?
 
 Well I know two ways to do this, recompile ssh with some extra code, or monitor sshd proccess and get the password on the fly, this time I'll talk about the second option.
