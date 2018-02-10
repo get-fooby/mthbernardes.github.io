@@ -52,6 +52,60 @@
 
     <article class="post">
         <header class="post-header">
+            <h2 class="post-title"><a href="/persistence/2018/01/10/stealing-ssh-credentials.html">Stealing SSH credentials.</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <h4 id="ok-i-became-root-what-can-i-do-now">Ok I became root what can I do now?.</h4>
+<p>Sometimes when you get root access to a server or a workstation, you don’t really have the root password, sometimes you just exploit the server, and got id 0, what can I do in this case?</p>
+
+ <a class="read-more" href="/persistence/2018/01/10/stealing-ssh-credentials.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Matheus Bernardes
+            
+            
+                on Persistence
+            
+            <time class="post-date" datetime="2018-01-10">
+                10 Jan 2018
+            </time>
+        </footer>
+    </article>
+
+    
+
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/web/2017/12/07/Test-XSS-with-no-access-to-response.html">Testing XSS in places where you can't see.</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <h4 id="the-problem">The problem</h4>
+<p>It’s common to you find XSS vulnerabilities during an web pentests, but some times, you’re testing an application that contains more then one interface, like user interface and admin interface, so how you can test for xss on the admin interface being just a regular user? Well it’s kind of simple, but it’s not a test to find all the xss on the admin page, for example, when you register on an application, there’s some informations you provide, like, name, address, bio and other things, so we can assume that the admin interface can read this informations, so we can just send XSS payloads, to try to get a XSS exploration, but not a payload like the most common,</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;XSS&#39;</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></figure>
+
+ <a class="read-more" href="/web/2017/12/07/Test-XSS-with-no-access-to-response.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Matheus Bernardes
+            
+            
+                on Web
+            
+            <time class="post-date" datetime="2017-12-07">
+                07 Dec 2017
+            </time>
+        </footer>
+    </article>
+
+    
+
+    <article class="post">
+        <header class="post-header">
             <h2 class="post-title"><a href="/conference/2017/10/07/BWCON-2017.html">BWCON 2017[pt-BR]</a></h2>
         </header>
         <section class="post-excerpt">
@@ -194,7 +248,7 @@ In my first attempt I failed, because all the requests made by the app are pinne
     <footer class="site-footer clearfix">
       <section class="copyright">
         <a href="/">Gambler</a> &copy;
-              2017 &bull; All rights reserved.
+              2018 &bull; All rights reserved.
               <script src="https://www.hackthebox.eu/badge/7591"></script>
       </section>
       <section class="poweredby">Made with Jekyll using
