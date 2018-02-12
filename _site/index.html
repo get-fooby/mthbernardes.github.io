@@ -52,11 +52,44 @@
 
     <article class="post">
         <header class="post-header">
+            <h2 class="post-title"><a href="/persistence/2018/02/10/stealing-ssh-credentials-another-approach.html">Stealing SSH credentials Another Approach.</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <h4 id="stealing-ssh-credentials-another-approach">Stealing SSH credentials Another Approach.</h4>
+<p>Recently I posted how to get ssh password using strace, but it’s no 100% effective, because the strace output changes on different distros, so searching for another approach I found this site <a href="http://www.chokepoint.net/2014/01/more-fun-with-pam-python-failed.html">ChokePoint</a> where they show how to create a PAM module using python to log failed attempts on ssh, now all I have to do, was change where they log the password.
+Original script, use the function auth_log when the login failed.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">check_pw</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">resp</span><span class="p">):</span>
+        <span class="n">auth_log</span><span class="p">(</span><span class="s2">&quot;Remote Host: </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pamh</span><span class="o">.</span><span class="n">rhost</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">resp</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">pamh</span><span class="o">.</span><span class="n">PAM_AUTH_ERR</span>
+     <span class="k">return</span> <span class="n">pamh</span><span class="o">.</span><span class="n">PAM_SUCCESS</span></code></pre></figure>
+
+ <a class="read-more" href="/persistence/2018/02/10/stealing-ssh-credentials-another-approach.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Matheus Bernardes
+            
+            
+                on Persistence
+            
+            <time class="post-date" datetime="2018-02-10">
+                10 Feb 2018
+            </time>
+        </footer>
+    </article>
+
+    
+
+    <article class="post">
+        <header class="post-header">
             <h2 class="post-title"><a href="/persistence/2018/01/10/stealing-ssh-credentials.html">Stealing SSH credentials.</a></h2>
         </header>
         <section class="post-excerpt">
             <h4 id="ok-i-became-root-what-can-i-do-now">Ok I became root what can I do now?.</h4>
-<p>Sometimes when you get root access to a server or a workstation, you don’t really have the root password, sometimes you just exploit the server, and got id 0, what can I do in this case?</p>
+<p>BEFORE ALL, it’s an old trick, but all the tutorials that I found didn’t work for me, so I just wrote my own :).
+Sometimes when you get root access to a server or a workstation, you don’t really have the root password, sometimes you just exploit the server, and got id 0, what can I do in this case?</p>
 
  <a class="read-more" href="/persistence/2018/01/10/stealing-ssh-credentials.html">&raquo;</a>
         </section>
